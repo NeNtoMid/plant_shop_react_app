@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import PlantImg from './../../assets/images/Home/plant.png';
 
-import { isMobile } from 'mobile-device-detect';
+import { isMobile, isMobileOnly } from 'mobile-device-detect';
 
 import breakpoints from '../../utils/breakpoints';
 
@@ -271,10 +271,9 @@ export const StyledPlantImg = styled.div`
 	background-position: bottom;
 	background-repeat: no-repeat;
 	background-size: contain;
-	display: ${isMobile && 'none'};
+	display: block;
 
 	${({ theme }) => theme.between(breakpoints.tablet, breakpoints.laptop)} {
-		display: block;
 		padding-left: 34rem;
 	}
 `;

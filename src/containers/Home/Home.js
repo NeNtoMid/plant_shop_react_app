@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
 
-import { isMobile } from 'mobile-device-detect';
+import { isMobile, isMobileOnly } from 'mobile-device-detect';
 
 import MobileMenu from './../../components/UI/MobileMenu/MobileMenu';
+
+import ModalVideo from 'react-modal-video';
+
+import './../../../node_modules/react-modal-video/css/modal-video.min.css';
 
 import {
 	StyledHeader,
@@ -77,6 +81,8 @@ const Home = (props) => {
 			</>
 		);
 	}
+
+	const [isDisplay, setDisplay] = useState(false);
 	return (
 		<>
 			{menu}
@@ -96,7 +102,7 @@ const Home = (props) => {
 						<StyledLinkSecondaryLight path='/pricing'>
 							<span style={{ fontSize: '1.7em' }}>Buy now</span>
 						</StyledLinkSecondaryLight>
-						<StyledLinkLightGreen path='/video'>
+						<StyledLinkLightGreen path='#' onClick={() => setDisplay(true)}>
 							<span>
 								<i className='far fa-play-circle'></i>
 							</span>
@@ -104,9 +110,21 @@ const Home = (props) => {
 						</StyledLinkLightGreen>
 					</StyledHeroWrapper>
 
-					<StyledPlantImg />
+					{!isMobileOnly && <StyledPlantImg />}
 				</StyledHero>
+				<ModalVideo
+					channel='youtube'
+					isOpen={isDisplay}
+					videoId='w77zPAtVTuI'
+					onClose={() => setDisplay(false)}
+				/>{' '}
 			</StyledMain>
+
+			{isMobileOnly && (
+				<StyledPlantImg
+					style={{ width: '80%', height: '18rem', paddingTop: '23rem' }}
+				/>
+			)}
 		</>
 	);
 };
