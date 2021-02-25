@@ -71,8 +71,8 @@ const Home = (props) => {
 							</StyledHeaderListElement>
 						</StyledHeaderList>
 						<StyledButtonsContainer>
-							<StyledLinkPrimary path='/login'>Log in</StyledLinkPrimary>
-							<StyledLinkSecondaryDark path='/signup'>
+							<StyledLinkPrimary to='/login'>Log in</StyledLinkPrimary>
+							<StyledLinkSecondaryDark to='/signup'>
 								<span>Sign up</span>
 							</StyledLinkSecondaryDark>
 						</StyledButtonsContainer>

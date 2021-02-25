@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 import PlantImg from './../../assets/images/Home/plant.png';
 
+import { Link } from 'react-router-dom';
+
 import { isMobile, isMobileOnly } from 'mobile-device-detect';
 
 import breakpoints from '../../utils/breakpoints';
@@ -70,14 +72,32 @@ export const StyledButtonsContainer = styled.div`
 	font-size: 1.3rem;
 `;
 
-export const StyledLinkPrimary = styled(StyledHeaderListElementLink)`
+export const StyledLinkPrimary = styled(Link)`
+	color: ${({ theme }) => theme.colors.lightGrey};
+
+	position: relative;
+	&:after {
+		background: none repeat scroll 0 0 transparent;
+		bottom: 0;
+		content: '';
+		display: block;
+		height: 1px;
+		left: 50%;
+		position: absolute;
+		background-color: ${({ theme }) => theme.colors.main};
+		transition: width 0.3s ease 0s, left 0.3s ease 0s;
+		width: 0;
+	}
+	&:hover:after {
+		width: 100%;
+		left: 0;
+	}
+
 	display: inline-block;
 	margin: 0 4.5rem;
 `;
 
-export const StyledLinkSecondaryDark = styled.a.attrs((props) => ({
-	href: props.path,
-}))`
+export const StyledLinkSecondaryDark = styled(Link)`
 	display: inline-block;
 	background-color: ${({ theme }) => theme.colors.main};
 	border: 1px solid ${({ theme }) => theme.colors.main};
