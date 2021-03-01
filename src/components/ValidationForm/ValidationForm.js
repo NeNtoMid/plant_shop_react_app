@@ -9,7 +9,22 @@ import classes from './ValidationForm.module.css';
 
 import { Link } from 'react-router-dom';
 
+import { isMobile } from 'mobile-device-detect';
+
+import Input from './../UI/Input/Input';
+
+import validationFormData from './../../utils/validationForm';
+
 const ValidationForm = (props) => {
+	const inputsForRegister = Object.keys(validationFormData).map((val) => (
+		<Input
+			key={val}
+			error={props.errors[val]}
+			{...validationFormData[val]}
+			validationRef={props.register(validationFormData[val].validation)}
+		/>
+	));
+
 	let form = (
 		<main>
 			<section className={classes.signup}>
@@ -26,71 +41,41 @@ const ValidationForm = (props) => {
 								method='POST'
 								className={classes.registerForm}
 								id='register-form'
+								onSubmit={props.submit(props.dataSubmission)}
 							>
-								<div className={classes.formGroup}>
-									<label htmlFor='name'>
-										<i className='fas fa-user'></i>
-									</label>
-									<input
-										type='text'
-										name='name'
-										id='name'
-										placeholder='Your Name'
-									/>
-								</div>
-								<div className={classes.formGroup}>
-									<label htmlFor='email'>
-										<i className='fas fa-envelope'></i>
-									</label>
-									<input
-										type='email'
-										name='email'
-										id='email'
-										placeholder='Your Email'
-									/>
-								</div>
-								<div className={classes.formGroup}>
-									<label htmlFor='pass'>
-										<i className='fas fa-lock'></i>
-									</label>
-									<input
-										type='password'
-										name='pass'
-										id='pass'
-										placeholder='Password'
-									/>
-								</div>
-								<div className={classes.formGroup}>
-									<label htmlFor='re-pass'>
-										<i className='fas fa-unlock'></i>
-									</label>
-									<input
-										type='password'
-										name='re_pass'
-										id='re_pass'
-										placeholder='Repeat your password'
-									/>
-								</div>
+								{inputsForRegister}
+
 								<div className={classes.formGroup}>
 									<input
 										type='checkbox'
 										name='agree-term'
 										id='agree-term'
 										className={classes.agreeTerm}
+										ref={props.register({
+											required: {
+												value: true,
+												message: 'Agreement is mandatory',
+											},
+										})}
 									/>
 									<label
 										htmlFor='agree-term'
 										className={classes.labelAgreeTerm}
 									>
-										<span>
+										<span
+											style={{
+												border: props.errors['agree-term'] && '1px solid red',
+											}}
+										>
 											<span></span>
 										</span>
 										I agree all statements in
 										<a href='#' className={classes.termService}>
-											Terms of service
+											Terms of service*
 										</a>
 									</label>
 								</div>
+
 								<div className={`${classes.formGroup} ${classes.formButton}`}>
 									<input
 										type='submit'
@@ -104,7 +89,11 @@ const ValidationForm = (props) => {
 						</div>
 						<div className={classes.signupImage}>
 							<figure>
-								<img src={bonsaiImg} alt='sign up' />
+								<img
+									src={bonsaiImg}
+									alt='sign up'
+									style={{ width: isMobile ? '65%' : '100%' }}
+								/>
 							</figure>
 							<Link to='/login' className={classes.signupImageLink}>
 								I am already member
@@ -117,14 +106,32 @@ const ValidationForm = (props) => {
 	);
 
 	if (!props.signup) {
+		const validationFormDataLogin = {
+			name: validationFormData.name,
+			pass: validationFormData.pass,
+		};
+
+		const inputsForLogin = Object.keys(validationFormDataLogin).map((val) => (
+			<Input
+				key={val}
+				error={props.errors[val]}
+				{...validationFormDataLogin[val]}
+				validationRef={props.register(validationFormDataLogin[val].validation)}
+			/>
+		));
+
 		form = (
 			<main>
-				<section>
+				<section className={classes.signup}>
 					<div className={classes.container}>
-						<div className={classes.signinContent}>
+						<div className={classes.signupContent}>
 							<div className={classes.signinImage}>
 								<figure>
-									<img src={fernImg} alt='sign in' />
+									<img
+										src={fernImg}
+										alt='sign in'
+										style={{ width: isMobile ? '50%' : '100%' }}
+									/>
 								</figure>
 								<Link to='/signup' className={classes.signupImageLink}>
 									Create an account
@@ -142,46 +149,9 @@ const ValidationForm = (props) => {
 									method='POST'
 									className={classes.registerForm}
 									id='login-form'
+									onSubmit={props.submit(props.dataSubmission)}
 								>
-									<div className={classes.formGroup}>
-										<label htmlFor='your_name'>
-											<i className='fas fa-user'></i>
-										</label>
-										<input
-											type='text'
-											name='your_name'
-											id='your_name'
-											placeholder='Your Name'
-										/>
-									</div>
-									<div className={classes.formGroup}>
-										<label htmlFor='your_pass'>
-											<i className='fas fa-lock'></i>
-										</label>
-										<input
-											type='password'
-											name='your_pass'
-											id='your_pass'
-											placeholder='Password'
-										/>
-									</div>
-									<div className={classes.formGroup}>
-										<input
-											type='checkbox'
-											name='remember-me'
-											id='remember-me'
-											className={classes.agreeTerm}
-										/>
-										<label
-											htmlFor='remember-me'
-											className={classes.labelAgreeTerm}
-										>
-											<span>
-												<span></span>
-											</span>
-											Remember me
-										</label>
-									</div>
+									{inputsForLogin}
 									<div className={`${classes.formGroup} ${classes.formButton}`}>
 										<input
 											type='submit'
@@ -225,7 +195,7 @@ const ValidationForm = (props) => {
 			</main>
 		);
 	}
-	return <>{form}</>;
+	return form;
 };
 
 ValidationForm.propTypes = {};

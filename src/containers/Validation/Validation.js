@@ -6,10 +6,24 @@ import useValidation from '../../hooks/Validation/useValidation';
 import ValidationForm from './../../components/ValidationForm/ValidationForm';
 
 const Validation = (props) => {
-	const { handleGoToPreviousPage } = useValidation();
+	const {
+		register,
+		errors,
+		handleSubmit,
+		handleGoToPreviousPage,
+		handleDataSubmission,
+	} = useValidation();
+
 	return (
 		<>
-			<ValidationForm signup={props.signup} goBack={handleGoToPreviousPage} />
+			<ValidationForm
+				signup={props.signup}
+				register={register}
+				errors={errors}
+				submit={handleSubmit}
+				dataSubmission={handleDataSubmission}
+				goBack={handleGoToPreviousPage}
+			/>
 		</>
 	);
 };
