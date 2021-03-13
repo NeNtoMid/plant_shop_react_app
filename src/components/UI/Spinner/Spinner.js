@@ -6,7 +6,7 @@ import { StyledSpinner } from './SpinnerStyle';
 const Spinner = (props) => {
 	return (
 		<>
-			<StyledSpinner>
+			<StyledSpinner size={props.size}>
 				<div></div>
 				<div></div>
 				<div></div>

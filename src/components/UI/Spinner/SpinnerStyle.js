@@ -16,11 +16,10 @@ const ldsRing = keyframes`
 export const StyledSpinner = styled.div`
 	display: inline-block;
 	position: relative;
-	font-size: 2em;
+	font-size: ${({ size }) => (size ? size : '1.8em')};
 	width: 8em;
 	height: 8em;
-	left: 45%;
-	top: 9em;
+
 	div {
 		box-sizing: border-box;
 		display: block;

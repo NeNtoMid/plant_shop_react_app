@@ -10,6 +10,7 @@ const validationForm = {
 			maxLength: { value: 126, message: 'Name is too long' },
 			setValueAs: (value) => value.trim(),
 		},
+		autoComplete: 'username',
 	},
 
 	email: {
@@ -27,6 +28,7 @@ const validationForm = {
 			},
 			setValueAs: (value) => value.trim(),
 		},
+		autoComplete: 'email',
 	},
 
 	pass: {
@@ -40,6 +42,7 @@ const validationForm = {
 			maxLength: { value: 126, message: 'Password is too long' },
 			setValueAs: (value) => value.trim(),
 		},
+		autoComplete: 'new-password',
 	},
 
 	re_pass: {
@@ -53,6 +56,7 @@ const validationForm = {
 			maxLength: { value: 126, message: 'Repeated password is too long' },
 			setValueAs: (value) => value.trim(),
 		},
+		autoComplete: 'repeat new-password',
 	},
 };
 

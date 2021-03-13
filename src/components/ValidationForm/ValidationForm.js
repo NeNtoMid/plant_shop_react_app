@@ -11,22 +11,36 @@ import { Link } from 'react-router-dom';
 
 import { isMobile } from 'mobile-device-detect';
 
+import { useSelector } from 'react-redux';
+
 import Input from './../UI/Input/Input';
 
 import validationFormData from './../../utils/validationForm';
 
+import Spinner from './../UI/Spinner/Spinner';
+
 const ValidationForm = (props) => {
-	const inputsForRegister = Object.keys(validationFormData).map((val) => (
-		<Input
-			key={val}
-			error={props.errors[val]}
-			{...validationFormData[val]}
-			validationRef={props.register(validationFormData[val].validation)}
-		/>
-	));
+	const error = useSelector((state) => state.user.error);
+
+	const inputsForRegister = Object.keys(validationFormData).map((val) => {
+		if (val.toString() === 'name' && !props.errors[val] && error) {
+			props.errors[val] = {
+				message: error.replace('Email', 'Email or username'),
+			};
+		}
+
+		return (
+			<Input
+				key={val}
+				error={props.errors[val]}
+				{...validationFormData[val]}
+				validationRef={props.register(validationFormData[val].validation)}
+			/>
+		);
+	});
 
 	let form = (
-		<main>
+		<main className={classes.main}>
 			<section className={classes.signup}>
 				<div className={classes.container}>
 					<div className={classes.signupContent}>
@@ -77,13 +91,17 @@ const ValidationForm = (props) => {
 								</div>
 
 								<div className={`${classes.formGroup} ${classes.formButton}`}>
-									<input
-										type='submit'
-										name='signup'
-										id='signup'
-										className={classes.formSubmit}
-										value='Register'
-									/>
+									{!props.loading ? (
+										<input
+											type='submit'
+											name='signup'
+											id='signup'
+											className={classes.formSubmit}
+											value='Register'
+										/>
+									) : (
+										<Spinner size='0.95em' />
+									)}
 								</div>
 							</form>
 						</div>
@@ -107,21 +125,28 @@ const ValidationForm = (props) => {
 
 	if (!props.signup) {
 		const validationFormDataLogin = {
-			name: validationFormData.name,
+			email: validationFormData.email,
 			pass: validationFormData.pass,
 		};
 
-		const inputsForLogin = Object.keys(validationFormDataLogin).map((val) => (
-			<Input
-				key={val}
-				error={props.errors[val]}
-				{...validationFormDataLogin[val]}
-				validationRef={props.register(validationFormDataLogin[val].validation)}
-			/>
-		));
+		const inputsForLogin = Object.keys(validationFormDataLogin).map((val) => {
+			if (val.toString() === 'email' && !props.errors[val] && error) {
+				props.errors[val] = { message: error.replace('Indentifier', 'Email') };
+			}
+			return (
+				<Input
+					key={val}
+					error={props.errors[val]}
+					{...validationFormDataLogin[val]}
+					validationRef={props.register(
+						validationFormDataLogin[val].validation
+					)}
+				/>
+			);
+		});
 
 		form = (
-			<main>
+			<main className={classes.main}>
 				<section className={classes.signup}>
 					<div className={classes.container}>
 						<div className={classes.signupContent}>
@@ -153,13 +178,17 @@ const ValidationForm = (props) => {
 								>
 									{inputsForLogin}
 									<div className={`${classes.formGroup} ${classes.formButton}`}>
-										<input
-											type='submit'
-											name='signin'
-											id='signin'
-											className={classes.formSubmit}
-											value='Log in'
-										/>
+										{!props.loading ? (
+											<input
+												type='submit'
+												name='signin'
+												id='signin'
+												className={classes.formSubmit}
+												value='Log in'
+											/>
+										) : (
+											<Spinner size='0.95em' />
+										)}
 									</div>
 								</form>
 								<div className={classes.socialLogin}>

@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 
 import { isMobile, isMobileOnly } from 'mobile-device-detect';
 
+import { useSelector } from 'react-redux';
+
 import MobileMenu from './../../components/UI/MobileMenu/MobileMenu';
 
 import ModalVideo from 'react-modal-video';
@@ -30,6 +32,8 @@ import {
 } from './HomeStyle';
 const Home = (props) => {
 	let menu = <MobileMenu />;
+
+	const isAuth = useSelector((state) => state.user.isAuth);
 
 	if (!isMobile) {
 		menu = (
@@ -71,10 +75,18 @@ const Home = (props) => {
 							</StyledHeaderListElement>
 						</StyledHeaderList>
 						<StyledButtonsContainer>
-							<StyledLinkPrimary to='/login'>Log in</StyledLinkPrimary>
-							<StyledLinkSecondaryDark to='/signup'>
-								<span>Sign up</span>
-							</StyledLinkSecondaryDark>
+							{isAuth ? (
+								<StyledLinkSecondaryDark to='/logout'>
+									<span>Log out</span>
+								</StyledLinkSecondaryDark>
+							) : (
+								<>
+									<StyledLinkPrimary to='/login'>Log in</StyledLinkPrimary>
+									<StyledLinkSecondaryDark to='/signup'>
+										<span>Sign up</span>
+									</StyledLinkSecondaryDark>
+								</>
+							)}
 						</StyledButtonsContainer>
 					</StyledNav>
 				</StyledHeader>

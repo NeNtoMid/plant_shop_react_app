@@ -1,18 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import useValidation from '../../hooks/Validation/useValidation';
+import useAuthentication from '../../hooks/Authentication/useAuthentication';
 
-import ValidationForm from './../../components/ValidationForm/ValidationForm';
+import ValidationForm from '../../components/ValidationForm/ValidationForm';
 
-const Validation = (props) => {
+const Authentication = (props) => {
 	const {
 		register,
 		errors,
+		loading,
 		handleSubmit,
 		handleGoToPreviousPage,
 		handleDataSubmission,
-	} = useValidation();
+	} = useAuthentication();
 
 	return (
 		<>
@@ -20,6 +21,7 @@ const Validation = (props) => {
 				signup={props.signup}
 				register={register}
 				errors={errors}
+				loading={loading}
 				submit={handleSubmit}
 				dataSubmission={handleDataSubmission}
 				goBack={handleGoToPreviousPage}
@@ -28,8 +30,8 @@ const Validation = (props) => {
 	);
 };
 
-Validation.propTypes = {
+Authentication.propTypes = {
 	signup: PropTypes.bool.isRequired,
 };
 
-export default Validation;
+export default Authentication;
