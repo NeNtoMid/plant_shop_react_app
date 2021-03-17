@@ -1,5 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useRef } from 'react';
+
+import { Link, useHistory } from 'react-router-dom';
 
 import {
 	StyledHeader,
@@ -12,13 +13,25 @@ import {
 } from './MobileMenuStyle';
 
 const MobileMenu = (props) => {
+	const history = useHistory();
+
+	const inputRef = useRef(null);
+
+	useEffect(() => {
+		return history.listen((location) => {
+			inputRef.current.checked = false;
+		});
+	}, [history]);
+
 	return (
 		<>
 			<StyledHeader>
-				<StyledHeaderLogo>Plantify</StyledHeaderLogo>
+				<Link to='/'>
+					<StyledHeaderLogo>Plantify</StyledHeaderLogo>
+				</Link>
 			</StyledHeader>
 			<StyledNav>
-				<StyledInput />
+				<StyledInput ref={inputRef} />
 				<StyledLabel>
 					<div className='spinner diagonal part-1'></div>
 					<div className='spinner horizontal'></div>
@@ -27,30 +40,37 @@ const MobileMenu = (props) => {
 				<StyledSidebarMenu>
 					<StyledSidebarMenuInner>
 						<li>
-							<a href='/products'>Prodcuts</a>
+							<Link to='/products'>Prodcuts</Link>
 						</li>
 						<li>
-							<a href='/fashion'>Fashion</a>
+							<Link to='/categories'> Categories</Link>
 						</li>
 						<li>
-							<a href='/tools'>Tools</a>
+							<Link to='/tools'>Tools</Link>
 						</li>
 						<li>
-							<a href='/books'>Books</a>
+							<Link to='/books'>Books</Link>
 						</li>
 						<li>
-							<a href='/docs'>Fashion</a>
+							<Link to='/docs'>Fashion</Link>
 						</li>
 						<li>
-							<a href='/more'>More</a>
+							<Link to='/more'>More</Link>
 						</li>
-
-						<li>
-							<a href='/login'>Log in</a>
-						</li>
-						<li>
-							<a href='/signup'>Sign up</a>
-						</li>
+						{!props.isAuth ? (
+							<>
+								<li>
+									<Link to='/login'>Log in</Link>
+								</li>
+								<li>
+									<Link to='/signup'>Sign up</Link>
+								</li>
+							</>
+						) : (
+							<li>
+								<Link to='/logout'>Log out</Link>
+							</li>
+						)}
 					</StyledSidebarMenuInner>
 				</StyledSidebarMenu>
 			</StyledNav>

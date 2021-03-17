@@ -98,7 +98,7 @@ export const StyledInput = styled.input.attrs((props) => ({
 }))``;
 
 export const StyledLabel = styled.label.attrs((props) => ({
-	for: 'openSidebarMenu',
+	htmlFor: 'openSidebarMenu',
 	className: 'sidebarIconToggle',
 }))``;
 
@@ -143,6 +143,8 @@ export const StyledSidebarMenuInner = styled.ul`
 			font-weight: bold;
 			cursor: pointer;
 			text-decoration: none;
+			display: block;
+			width: 100%;
 		}
 	}
 

@@ -48,16 +48,19 @@ export const registerUser = (registerData) => {
 			});
 			dispatch(setJWTExpirationTimeout());
 		} catch (err) {
-			console.log(err.response.data.message[0].messages[0].message);
+			let errMessage = `Please come back later! Sorry for trouble`;
+
+			if (err.response.status === 400) {
+				errMessage = err.response.data.message[0].messages[0].message;
+				console.log(errMessage);
+			}
 
 			dispatch({
 				type: REGISTER_USER_FAIL,
 				payload: {
-					msg: err.response.data.message[0].messages[0].message,
+					msg: errMessage,
 				},
 			});
-		} finally {
-			return;
 		}
 	};
 };
@@ -85,13 +88,19 @@ export const loginUser = (loginData) => {
 
 			dispatch(setJWTExpirationTimeout());
 		} catch (err) {
+			let errMessage = `Please come back later! Sorry for trouble`;
+
+			if (err.response.status === 400) {
+				errMessage = err.response.data.message[0].messages[0].message;
+				console.log(errMessage);
+			}
+
 			dispatch({
 				type: LOGIN_USER_FAIL,
 				payload: {
-					msg: err.response.data.message[0].messages[0].message,
+					msg: errMessage,
 				},
 			});
-			return err;
 		}
 	};
 };

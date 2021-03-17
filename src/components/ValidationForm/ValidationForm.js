@@ -131,7 +131,7 @@ const ValidationForm = (props) => {
 
 		const inputsForLogin = Object.keys(validationFormDataLogin).map((val) => {
 			if (val.toString() === 'email' && !props.errors[val] && error) {
-				props.errors[val] = { message: error.replace('Indentifier', 'Email') };
+				props.errors[val] = { message: error.replace('Identifier', 'Email') };
 			}
 			return (
 				<Input

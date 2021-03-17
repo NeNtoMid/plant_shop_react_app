@@ -1,12 +1,10 @@
 import styled from 'styled-components';
 
-import PlantImg from './../../assets/images/Home/plant.png';
+import breakpoints from '../../utils/breakpoints';
 
 import { isMobile } from 'mobile-device-detect';
 
 import { Link } from 'react-router-dom';
-
-import breakpoints from '../../utils/breakpoints';
 
 /* -------------------------------------------------------------------------- */
 /*                                    Main                                    */
@@ -157,20 +155,5 @@ export const StyledLinkLightGreen = styled(Link)`
 
 	${({ theme }) => theme.down(breakpoints.tablet)} {
 		font-size: 0.65rem;
-	}
-`;
-
-export const StyledPlantImg = styled.div`
-	width: 50%;
-	height: auto;
-	background-image: url(${PlantImg});
-
-	background-position: bottom;
-	background-repeat: no-repeat;
-	background-size: contain;
-	display: block;
-
-	${({ theme }) => theme.between(breakpoints.tablet, breakpoints.laptop)} {
-		padding-left: 34rem;
 	}
 `;
